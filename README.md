@@ -2,9 +2,7 @@
 
 **A multi-simulator command deck for your driving rig.** F-100 brings truck dashboards, map navigation, route history, controls, Spotify, and companion simulator screens together in a retro-inspired local console.
 
-<p align="center">
-  <img src="screenshots/f100-command-deck.jpg" alt="F-100 Console launcher with ATS, ETS2, Bus Simulator, Construction Simulator, RoadCraft, SnowRunner, and Settings apps" width="100%">
-</p>
+
 
 *The launcher preview: seven focused apps, live bridge status, and a shared command-deck interface. The screenshot was captured locally with no simulator connected.*
 
