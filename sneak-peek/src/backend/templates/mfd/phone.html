@@ -1,0 +1,26 @@
+{% import "_icons.html" as ico %}
+{# v2's companion handset is not part of the v3 deck yet, and there is no phone
+   link to mirror.  Rather than stage a contact list, the screen shows the
+   pairing this build is missing. #}
+<div class="phone-layout is-dormant">
+  <div class="mfd-empty tall">
+    {{ ico.icon('phone') }}
+    <b>No handset paired</b>
+    <span>Calling, contacts and media transport over Bluetooth are not exposed to the deck in this build. The Phone view is the slot they will land in.</span>
+    <span class="mfd-empty-detail">Bluetooth audio on this machine is mirrored by the Media screen when the OS reports it.</span>
+  </div>
+
+  <div class="phone-col phone-side">
+    <div class="phone-header">NOT WIRED YET</div>
+    <div class="phone-rows">
+      <div class="phone-row"><span>Companion handset</span><b>—</b></div>
+      <div class="phone-row"><span>Hands-free link</span><b>—</b></div>
+      <div class="phone-row"><span>Contact sync</span><b>—</b></div>
+      <div class="phone-row"><span>Dial from dock</span><b>—</b></div>
+    </div>
+    <div class="mfd-footnote">
+      <span>NOTE</span>
+      <span>v2 owns the companion handset. v3 keeps this slot empty until it has a link worth showing.</span>
+    </div>
+  </div>
+</div>

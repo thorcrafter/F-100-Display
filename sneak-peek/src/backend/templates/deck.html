@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% import "_icons.html" as ico %}
+{#
+  The deck is three bays on one plate:
+
+    INSTRUMENTS   gauge + readouts, read-only from the SCS bridge
+    CONTROL RACK  the HD·Controls physical switches, the only write surface
+    MFD-9         the infotainment screen; its tab rail is the navigation
+
+  Every MFD view has a URL.  The rail links to those URLs, and deck.js upgrades
+  the click into an in-place swap, which is the part of v2's shell that earned
+  its keep.  There is no map: Trip dead-reckons from the position readback.
+#}
+{% block body %}
+<main class="deck">
+
+  <div class="deck-rail">
+    <div class="deck-brand">
+      <span class="deck-mark">{{ ico.icon('gauge') }}</span>
+      <span class="deck-brand-text">
+        <b>F-100</b>
+        <small>COMMAND DECK · MFD-9</small>
+      </span>
+    </div>
+
+    <nav class="deck-apps" aria-label="Simulator">
+      {% for a in apps %}
+      <a class="deck-app{% if a.id == app.id %} is-active{% endif %}" href="{{ a.href(screen) }}"
+         {% if a.id == app.id %}aria-current="page"{% endif %}
+         title="{{ a.name }} — {{ a.note }}">
+        <span class="deck-app-led"></span>
+        <span class="deck-app-label">{{ a.short }}</span>
+        <span class="deck-app-sub">{{ a.units }}</span>
+      </a>
+      {% endfor %}
+    </nav>
+
+    <div class="deck-rail-right">
+      <span class="deck-chip" id="railBridge" data-state="offline"><i class="dot"></i><span>BRIDGE</span></span>
+      <span class="deck-chip mono" id="railClock" title="Local time">--:--</span>
+    </div>
+  </div>
+
+  <div class="deck-bays">
+
+    <!-- ============================================================
+         BAY 1 — INSTRUMENTS
+         ============================================================ -->
+    <section class="panel bay bay--cluster" aria-label="Instrument cluster">
+      <span class="panel-screw tl"></span>
+      <span class="panel-screw tr"></span>
+      <span class="panel-screw bl"></span>
+      <span class="panel-screw br"></span>
+
+      <header class="panel-head">
+        <div class="brand">HD·INSTRUMENTS</div>
+        <div class="meta" id="clusterMeta">{{ app.short }} / LIVE TELEMETRY</div>
+      </header>
+
+      <div class="cluster-body">
+        <div class="gauge-wrap">
+          <svg class="gauge" viewBox="0 0 200 130" role="img" aria-label="Engine speed">
+            <g id="gaugeTicks"></g>
+            <g id="gaugeMinor"></g>
+            <path d="M 30 100 A 70 70 0 1 1 170 100"
+                  fill="none" stroke="#1e2328" stroke-width="3" stroke-linecap="round"/>
+            <g class="gauge-needle" id="gaugeNeedle" transform="rotate(-120 100 100)">
+              <line x1="100" y1="100" x2="100" y2="38"
+                    stroke="#e0453a" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="100" y1="100" x2="100" y2="46"
+                    stroke="#ff8a75" stroke-width="1" stroke-linecap="round" opacity=".8"/>
+            </g>
+            <circle cx="100" cy="100" r="9" fill="url(#hubGrad)"/>
+            <circle cx="100" cy="100" r="3.2" fill="#0a0c0e"/>
+            <defs>
+              <radialGradient id="hubGrad" cx="35%" cy="30%" r="80%">
+                <stop offset="0%" stop-color="#d5dce3"/>
+                <stop offset="40%" stop-color="#7b838b"/>
+                <stop offset="100%" stop-color="#1e2226"/>
+              </radialGradient>
+            </defs>
+          </svg>
+          <div class="gauge-label">SPEED × 10 MPH</div>
+        </div>
+
+        <div class="cluster-displays" id="clusterDisplays" aria-label="Digital readouts"></div>
+
+        <div class="readouts">
+          <div class="readout">
+            <span class="ro-label">MODE</span>
+            <span class="ro-value" id="roMode">—</span>
+          </div>
+          <div class="readout">
+            <span class="ro-label">SPEED</span>
+            <span class="ro-value" id="roSpeed">—</span>
+          </div>
+          <div class="readout">
+            <span class="ro-label">RPM</span>
+            <span class="ro-value" id="roRpm">—</span>
+          </div>
+          <div class="readout">
+            <span class="ro-label">COOLANT</span>
+            <span class="ro-value" id="roTemp">—</span>
+          </div>
+          <div class="readout wide">
+            <span class="ro-label">STATUS</span>
+            <div class="status-lights">
+              <span class="sl" id="slArm">ARM</span>
+              <span class="sl" id="slRun">RUN</span>
+              <span class="sl" id="slFault">FAULT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="panel-foot">
+        <span class="led-mini" id="statusLed"></span>
+        <span id="statusText">SYSTEM READY</span>
+        <span class="panel-foot-spacer"></span>
+        <span class="mono" id="clusterUnits">{{ app.units|upper }}</span>
+      </footer>
+    </section>
+
+    <!-- ============================================================
+         BAY 2 — CONTROL RACK
+         ============================================================ -->
+    <section class="panel bay bay--rack" aria-label="Control rack">
+      <span class="panel-screw tl"></span>
+      <span class="panel-screw tr"></span>
+      <span class="panel-screw bl"></span>
+      <span class="panel-screw br"></span>
+
+      <header class="panel-head">
+        <div class="brand">HD·CONTROLS</div>
+        <div class="meta">UNIT 04 / MOTOR CONTROL</div>
+      </header>
+
+      <div class="rack" id="rack"></div>
+
+      <footer class="panel-foot">
+        <span class="led-mini" id="rackLed"></span>
+        <span id="rackText">SCS INPUT · WAITING</span>
+        <span class="panel-foot-spacer"></span>
+        <span class="mono" id="rackPending"></span>
+      </footer>
+    </section>
+
+  </div>
+
+  <!-- ============================================================
+       BAY 3 — INFOTAINMENT MFD-9
+       ============================================================ -->
+  <section class="infotainment bay bay--mfd" aria-label="Infotainment display">
+    <span class="panel-screw tl"></span>
+    <span class="panel-screw tr"></span>
+    <span class="panel-screw bl"></span>
+    <span class="panel-screw br"></span>
+
+    <header class="panel-head">
+      <div class="brand">HD·INFOTAINMENT</div>
+      <div class="meta">MFD-9 / MULTI-FUNCTION DISPLAY</div>
+    </header>
+
+    <div class="info-housing">
+      <span class="hd-corner-screw" style="left:12px;top:12px"></span>
+      <span class="hd-corner-screw" style="left:calc(100% - 12px);top:12px"></span>
+      <span class="hd-corner-screw" style="left:12px;top:calc(100% - 12px)"></span>
+      <span class="hd-corner-screw" style="left:calc(100% - 12px);top:calc(100% - 12px)"></span>
+      <div class="info-brand-row">
+        <span>{{ app.short }} · TRIP · MEDIA · VEHICLE</span>
+        <span>MODEL 9C / SN 4412-A · V3</span>
+      </div>
+
+      <div class="info-screen">
+        <div class="info-status">
+          <div class="status-left">
+            <span class="st-item"><span class="st-dot" id="stBridge"></span><span id="stBridgeText">BRIDGE</span></span>
+            <span class="st-item"><span class="st-dot" id="stGps"></span><span id="stGpsText">NO FIX</span></span>
+            <span class="st-item" id="stGame">NO GAME</span>
+          </div>
+          <div class="status-right">
+            <span class="st-item" id="stUnits">{{ app.units|upper }}</span>
+            <span class="st-item info-clock" id="infoClock">--:--</span>
+          </div>
+        </div>
+
+        <div class="info-main">
+          <nav class="info-tabs" id="infoTabs" aria-label="MFD views">
+            {% for s in screens %}
+            <a class="info-tab{% if s.id == screen.id %} is-active{% endif %}"
+               href="{{ app.href(s) }}" data-view="{{ s.id }}" title="{{ s.label }} · {{ s.hint }}">
+              {{ ico.icon(s.icon) }}
+              <span>{{ s.label }}</span>
+            </a>
+            {% endfor %}
+          </nav>
+
+          <div class="info-views" id="infoViews">
+            {% for s in screens %}
+            <div class="info-view{% if s.id == screen.id %} is-active{% endif %}" data-view="{{ s.id }}">
+              {% include s.template %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="info-dock">
+          <span id="dockBridge">BRIDGE —</span>
+          <span class="dock-sep"></span>
+          <span id="dockMedia">MEDIA —</span>
+          <span class="dock-sep"></span>
+          <span id="dockControls">CONTROLS —</span>
+          <span class="dock-spacer"></span>
+          <span class="dock-track" id="dockTrack">—</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="deck-foot">
+    <span class="led-mini" id="deckLed"></span>
+    <span>F-100 · v3 DECK</span>
+    <span>·</span>
+    <span>{{ app.name }}</span>
+    <span>·</span>
+    <span class="mono">/{{ app.id }}/{{ screen.id }}/</span>
+    <span class="deck-foot-spacer"></span>
+    <span id="deckFootStatus">STARTING</span>
+  </footer>
+</main>
+{% endblock %}

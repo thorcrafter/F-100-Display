@@ -54,7 +54,20 @@ Pair once from Settings. The six-digit code, the address a phone can reach, and 
 
 The phone renders the console's real URL at phone size, so it is the same screens and data rather than a second implementation. The steering cross walks the whole screen list, scrolls the page, and presses Enter; the keyboard opens over the copy and sends keystrokes to the console. Idle for thirty seconds while a track is playing and a now-playing cover slides up instead.
 
+## Sneak peek — v3 hardware deck
+
+![v3 hardware deck — instruments, control rack and MFD-9](sneak-peek/screenshots/deck-overview.jpg)
+
+One deck: the HD·Instruments cluster, an HD·Controls rack of physical switches
+bound to the real SCS input actions, and the MFD-9. The Trip screen needs **no
+map data**: the compass and heading tape read the game's heading, the trace
+plots the positions the game publishes, and the meter integrates them (×19
+world scale — the game odometer's convention), with teleports starting a new
+segment instead of inventing road. Everything unpublished stays an em dash.
+
 ## Current status
+
+
 
 F-100 is a local companion display, not a game modification or an online-game cheat. It runs as a Flask web app and reads simulator data through local integrations. A screenshot confirms the interface renders; it does **not** mean a simulator is connected or that game controls have been verified live.
 
@@ -83,7 +96,7 @@ Generated map data and SCS `.scs` files in this repository are created from the 
 
 ## Source and setup
 
-This GitHub repository currently contains this README and screenshots; **the application source and runtime files are not included here yet**, so cloning this repository alone will not run the console. The working application uses Python 3.14 and Flask and is served locally at `http://127.0.0.1:5178/`. Once the source tree is published here, setup instructions will be added alongside it.
+This GitHub repository now includes the **first source drop** — the v3 hardware deck under [`sneak-peek/`](sneak-peek/), which runs with Python 3 + Flask (`sneak-peek/src/run.py`, default port 5176) — while the full multi-simulator console source is still not included, so cloning this repository alone will not yet run the full console. The working application uses Python 3.14 and Flask and is served locally at `http://127.0.0.1:5178/`.
 
 ## Project links
 

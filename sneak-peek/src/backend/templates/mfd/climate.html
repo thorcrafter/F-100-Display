@@ -1,0 +1,53 @@
+{% import "_icons.html" as ico %}
+{# The SCS SDK publishes engine, lights and drivetrain state — not HVAC.  This
+   view is the shape the climate panel will take, with every value left as an
+   em dash and the controls inert, rather than a plausible-looking 22°. #}
+<div class="mfd-note">
+  {{ ico.icon('warning') }}
+  <span><b>No climate bus.</b> ATS and ETS2 do not publish cab climate to the SDK, so this panel is documented, not wired. Nothing here is simulated.</span>
+</div>
+
+<div class="climate-layout is-dormant" aria-disabled="true">
+  <div class="climate-zone">
+    <div class="cz-label">DRIVER</div>
+    <div class="cz-temp">
+      <button class="cz-btn" type="button" disabled aria-label="Driver temperature down">−</button>
+      <span class="cz-value">—</span>
+      <button class="cz-btn" type="button" disabled aria-label="Driver temperature up">+</button>
+    </div>
+    <div class="cz-row">
+      <button class="cz-toggle" type="button" disabled>SEAT</button>
+      <button class="cz-toggle" type="button" disabled>AUTO</button>
+    </div>
+  </div>
+
+  <div class="climate-center">
+    <div class="cc-label">FAN SPEED</div>
+    <div class="cc-bars" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="cc-modes">
+      <button class="cc-mode" type="button" disabled>AUTO</button>
+      <button class="cc-mode" type="button" disabled>AC</button>
+      <button class="cc-mode" type="button" disabled>RECIRC</button>
+    </div>
+  </div>
+
+  <div class="climate-zone">
+    <div class="cz-label">PASSENGER</div>
+    <div class="cz-temp">
+      <button class="cz-btn" type="button" disabled aria-label="Passenger temperature down">−</button>
+      <span class="cz-value">—</span>
+      <button class="cz-btn" type="button" disabled aria-label="Passenger temperature up">+</button>
+    </div>
+    <div class="cz-row">
+      <button class="cz-toggle" type="button" disabled>SEAT</button>
+      <button class="cz-toggle" type="button" disabled>AUTO</button>
+    </div>
+  </div>
+</div>
+
+<div class="mfd-footnote">
+  <span>WHAT WOULD FILL THIS</span>
+  <span>A climate bridge reading the cab controller — no such tap exists for either SCS title yet.</span>
+</div>

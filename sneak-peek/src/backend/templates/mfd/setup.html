@@ -1,0 +1,48 @@
+{% import "_icons.html" as ico %}
+{# Preferences are the browser's; facts about the machine come from the boot
+   payload and the health poll.  Nothing here is stored on the server.  There is
+   no map to configure: the Trip screen works from the position readback. #}
+<div class="settings-layout">
+  <div class="settings-row">
+    <span>Units</span>
+    <div class="settings-seg" id="setupUnits" role="group" aria-label="Units">
+      <button type="button" data-units="metric">METRIC</button>
+      <button type="button" data-units="imperial">IMPERIAL</button>
+    </div>
+  </div>
+
+  <div class="settings-row">
+    <span>SCS bridge</span>
+    <span class="settings-fact" id="setupBridge">checking…</span>
+  </div>
+
+  <div class="settings-row">
+    <span>Position readback</span>
+    <span class="settings-fact" id="setupPosition">checking…</span>
+  </div>
+
+  <div class="settings-row">
+    <span>Trip meter</span>
+    <span class="settings-fact" id="setupTrip">checking…</span>
+  </div>
+
+  <div class="settings-row">
+    <span>Media mirror</span>
+    <span class="settings-fact" id="setupMedia">checking…</span>
+  </div>
+
+  <div class="settings-row">
+    <span>World data</span>
+    <span class="settings-fact">NONE · DEAD RECKONED</span>
+  </div>
+
+  <div class="settings-row">
+    <span>Deck host</span>
+    <span class="settings-fact mono" id="setupHost">—</span>
+  </div>
+
+  <div class="settings-row">
+    <span>Firmware</span>
+    <span class="settings-fact mono">F-100 v3 · HD·Controls 1.4</span>
+  </div>
+</div>

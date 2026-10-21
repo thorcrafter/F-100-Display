@@ -1,0 +1,3 @@
+# v3 shares the checkout's virtualenv; the deck itself only needs Flask.
+# v2's optional winsdk is used, when present, for the Spotify desktop mirror.
+flask==3.0.3

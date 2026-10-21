@@ -1,0 +1,31 @@
+{% import "_icons.html" as ico %}
+<!doctype html>
+{# The deck is a piece of hardware, so the document is only the frame: metal
+   page, one main plate, and the boot JSON the frontend reads.  There is no app
+   bar and no separate launcher — the MFD tab rail is the navigation. #}
+<html lang="en" data-theme="{{ app.theme if app else 'retro' }}"
+      {% if app %}style="--accent: {{ app.accent }};"{% endif %}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}{% if app %}{{ app.short }} · {{ screen.label }}{% else %}{{ title }}{% endif %}{% endblock %}</title>
+  <link rel="icon" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/css/engine.css">
+  <link rel="stylesheet" href="/static/css/deck.css">
+  {% block head %}{% endblock %}
+</head>
+<body data-app="{{ app.id if app else '' }}"
+      data-screen="{{ screen.id if screen else '' }}"
+      data-units="{{ app.units if app else 'metric' }}">
+{% block body %}{% endblock %}
+
+<div class="deck-toast" id="deckToast" role="status" aria-live="polite"></div>
+
+{% if boot is defined %}
+{# One place for every value the frontend needs to boot. #}
+<script type="application/json" id="deck-boot">{{ boot|tojson }}</script>
+<script type="module" src="/static/js/deck.js"></script>
+{% endif %}
+{% block scripts %}{% endblock %}
+</body>
+</html>

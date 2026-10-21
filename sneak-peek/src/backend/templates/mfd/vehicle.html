@@ -1,0 +1,52 @@
+{% import "_icons.html" as ico %}
+{# Only fields the SCS plugin actually publishes.  A missing reading stays an
+   em dash; the deck never fills a gauge with a zero it did not read. #}
+<div class="vehicle-layout">
+  <div class="vehicle-grid">
+    <div class="vi-card">
+      <span class="vi-label">SPEED</span>
+      <span class="vi-value" id="viSpeed">—</span>
+      <span class="vi-unit" id="viSpeedUnit">MPH</span>
+    </div>
+    <div class="vi-card">
+      <span class="vi-label">ENGINE</span>
+      <span class="vi-value" id="viRpm">—</span>
+      <span class="vi-unit">REV/MIN</span>
+    </div>
+    <div class="vi-card">
+      <span class="vi-label">COOLANT</span>
+      <span class="vi-value" id="viTemp">—</span>
+      <span class="vi-unit">°C</span>
+    </div>
+    <div class="vi-card">
+      <span class="vi-label">OIL</span>
+      <span class="vi-value" id="viOil">—</span>
+      <span class="vi-unit">PSI</span>
+    </div>
+    <div class="vi-card">
+      <span class="vi-label">BATTERY</span>
+      <span class="vi-value" id="viBattery">—</span>
+      <span class="vi-unit">VOLTS</span>
+    </div>
+    <div class="vi-card">
+      <span class="vi-label">FUEL</span>
+      <span class="vi-value" id="viFuel">—</span>
+      <span class="vi-unit" id="viFuelUnit">%</span>
+      <div class="vi-bar"><div class="vi-bar-fill green" id="viFuelBar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="vehicle-strip">
+    <span class="vi-pill"><b>GEAR</b><span id="viGear">—</span></span>
+    <span class="vi-pill"><b>MOTOR BRAKE</b><span id="viBrake">—</span></span>
+    <span class="vi-pill"><b>RETARDER</b><span id="viRetarder">—</span></span>
+    <span class="vi-pill"><b>LIFT AXLE</b><span id="viLift">—</span></span>
+    <span class="vi-pill"><b>TRAILER AXLE</b><span id="viTrailerLift">—</span></span>
+    <span class="vi-pill"><b>LIGHTS</b><span id="viLights">—</span></span>
+  </div>
+
+  <div class="mfd-footnote">
+    <span>SOURCE</span>
+    <span id="vehicleSource">SCS shared-memory plugin · read-only</span>
+  </div>
+</div>

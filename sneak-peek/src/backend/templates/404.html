@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "_icons.html" as ico %}
+{% block title %}Not found · {{ title }}{% endblock %}
+{% block body %}
+<main class="panel notfound">
+  <span class="panel-screw tl"></span>
+  <span class="panel-screw tr"></span>
+  <span class="panel-screw bl"></span>
+  <span class="panel-screw br"></span>
+  <header class="panel-head">
+    <div class="brand">F-100 · NO SIGNAL</div>
+    <div class="meta">MFD-9 / 404</div>
+  </header>
+  <div class="notfound-body">
+    {{ ico.icon('warning') }}
+    <h1>That screen is not on this deck.</h1>
+    <p>The MFD rail only has the views this build carries. Start from the deck and pick one.</p>
+    <a class="btn-link" href="/">Return to the deck</a>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% import "_icons.html" as ico %}
+{# No world file is loaded here.  The compass reads the game's heading, the
+   canvas plots the positions the game publishes, and the meter integrates the
+   distance between them (× 19 for the map's scale).  The empty state says that
+   plainly instead of drawing invented streets. #}
+<div class="trip-layout" id="tripLayout">
+  <div class="trip-compass">
+    <span class="trip-card-label">COURSE</span>
+    <div class="trip-compass-dial">
+      <svg class="trip-compass-svg" viewBox="0 0 200 200" aria-hidden="true">
+        <circle class="trip-compass-ring" cx="100" cy="100" r="88"/>
+        <g id="tripCompassTicks"></g>
+        <g id="tripCompassNeedle" transform="rotate(0 100 100)">
+          <polygon class="trip-needle-n" points="100,44 106,100 100,108 94,100"/>
+          <polygon class="trip-needle-s" points="100,156 94,100 100,92 106,100"/>
+        </g>
+        <circle class="trip-compass-hub" cx="100" cy="100" r="6.5"/>
+      </svg>
+      <div class="trip-compass-center">
+        <b id="tripHeading">—</b>
+        <span id="tripCardinal">NO FIX</span>
+      </div>
+    </div>
+    <div class="trip-tape" aria-hidden="true">
+      <div class="trip-tape-window" id="tripTapeWindow">
+        <div class="trip-tape-track" id="tripTapeTrack"></div>
+        <span class="trip-tape-mark"></span>
+      </div>
+    </div>
+
+    <div class="trip-fix">
+      <div><span>WORLD X</span><b id="tripWorldX">—</b></div>
+      <div><span>WORLD Y</span><b id="tripWorldY">—</b></div>
+      <div><span>SEGMENTS</span><b id="tripSegments">1</b></div>
+    </div>
+
+    <div class="trip-compass-foot">
+      <span>GAME HEADING</span>
+      <span id="tripHeadingNote">not published</span>
+    </div>
+  </div>
+
+  <div class="trip-trace">
+    <div class="trip-trace-head">
+      <span class="trip-card-label">SESSION TRACE</span>
+      <span class="trip-trace-mode" id="tripTraceMode">NO FIX</span>
+    </div>
+    <div class="trip-trace-stage">
+      <canvas class="trip-canvas" id="tripCanvas"
+              aria-label="Dead-reckoned trace of the positions published this trip"></canvas>
+      <div class="trip-trace-empty" id="tripTraceEmpty">
+        {{ ico.icon('compass') }}
+        <b id="tripEmptyTitle">Waiting for a position</b>
+        <span id="tripEmptyDetail">The deck plots the points the game publishes — no map file is read.</span>
+      </div>
+    </div>
+    <div class="trip-trace-foot">
+      <span id="tripTraceScale">SCALE —</span>
+      <span id="tripTracePoints">0 PTS</span>
+    </div>
+  </div>
+
+  <div class="trip-stats">
+    <div class="trip-distance">
+      <span class="trip-card-label">TRIP DISTANCE</span>
+      <span class="trip-distance-value" id="tripDistance">—</span>
+      <span class="trip-distance-unit" id="tripDistanceUnit">GAME KM</span>
+      <span class="trip-distance-note" id="tripDistanceNote">world metres × 19</span>
+    </div>
+
+    <div class="trip-stats-grid">
+      <div class="trip-stat"><span>AVG SPEED</span><b id="tripAvg">—</b></div>
+      <div class="trip-stat"><span>MAX SPEED</span><b id="tripMax">—</b></div>
+      <div class="trip-stat"><span>DRIVING</span><b id="tripDriving">—</b></div>
+      <div class="trip-stat"><span>SESSION</span><b id="tripElapsed">—</b></div>
+      <div class="trip-stat"><span>FUEL USED</span><b id="tripFuel">—</b></div>
+      <div class="trip-stat"><span>ECONOMY</span><b id="tripEconomy">—</b></div>
+    </div>
+
+    <p class="trip-note">
+      Distance integrates the position readback and scales it ×19; fuel use is the fall in the tank
+      readback. Nothing is simulated.
+    </p>
+
+    <button class="trip-reset" id="tripReset" type="button">
+      {{ ico.icon('refresh') }}<span>RESET TRIP</span>
+    </button>
+  </div>
+</div>

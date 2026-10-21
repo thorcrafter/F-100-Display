@@ -1,0 +1,52 @@
+{% import "_icons.html" as ico %}
+{# Media shows what the OS media session says.  No artwork lookup, no Web API
+   sign-in: if nothing is playing, the screen says so instead of staging a
+   track. #}
+<div class="media-layout" id="mediaLayout">
+  <div class="media-art media-art--1" id="mediaArt">
+    <img class="media-art-img" id="mediaArtImg" alt="" hidden>
+    <div class="media-art-gloss"></div>
+    <div class="media-art-eq" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="media-info">
+    <div class="media-eyebrow" id="mediaEyebrow">MEDIA · NO SESSION</div>
+    <div class="media-title" id="mediaTitle">No media source</div>
+    <div class="media-artist" id="mediaArtist">Open a player on this machine</div>
+
+    <div class="media-progress">
+      <div class="media-bar" id="mediaBar">
+        <div class="media-bar-fill" id="mediaBarFill" style="width:0%"></div>
+        <div class="media-bar-knob" id="mediaBarKnob" style="left:0%"></div>
+      </div>
+      <div class="media-times">
+        <span id="mediaCurrent">0:00</span>
+        <span id="mediaDuration">0:00</span>
+      </div>
+    </div>
+
+    <div class="media-controls">
+      <button class="media-btn" id="mediaPrev" aria-label="Previous track">
+        <svg viewBox="0 0 18 18" fill="currentColor"><rect x="4" y="3" width="2" height="12"/><polygon points="15,3 7,9 15,15"/></svg>
+      </button>
+      <button class="media-btn media-btn-play" id="mediaPlay" aria-label="Play or pause">
+        <svg class="icon-play" viewBox="0 0 18 18" fill="currentColor"><polygon points="6,4 15,9 6,14"/></svg>
+        <svg class="icon-pause" viewBox="0 0 18 18" fill="currentColor"><rect x="5" y="4" width="2.5" height="10"/><rect x="10.5" y="4" width="2.5" height="10"/></svg>
+      </button>
+      <button class="media-btn" id="mediaNext" aria-label="Next track">
+        <svg viewBox="0 0 18 18" fill="currentColor"><polygon points="3,3 11,9 3,15"/><rect x="12" y="3" width="2" height="12"/></svg>
+      </button>
+      <span class="media-src" id="mediaSource">SOURCE —</span>
+    </div>
+  </div>
+</div>
+
+<div class="mfd-empty" id="mediaEmpty" hidden>
+  {{ ico.icon('music') }}
+  <b>No media session</b>
+  <span>Start Spotify or another player on this machine. The deck mirrors the OS media session; it does not stream anything itself.</span>
+  <span class="mfd-empty-detail" id="mediaEmptyDetail"></span>
+</div>
