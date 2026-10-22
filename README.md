@@ -49,10 +49,10 @@ Draw with the console's own geometry, order the stroke animation by contour leng
 Pair once from Settings. The six-digit code, the address a phone can reach, and the two permissions — change screens and type into fields — are all in one panel.
 
 <p align="center">
-  <img src="screenshots/companion-map.webp" alt="Phone companion mirroring the console map with the steering cross, link status, and drive dock" width="300">
+  <img src="screenshots/companion-keyboard.webp" alt="Phone companion held sideways: the console's Spotify screen mirrored above a popup keyboard typing 'hammerfall' into the console's own search field" width="100%">
 </p>
 
-The phone renders the console's real URL at phone size, so it is the same screens and data rather than a second implementation. The steering cross walks the whole screen list, scrolls the page, and presses Enter; the keyboard opens over the copy and sends keystrokes to the console. Idle for thirty seconds while a track is playing and a now-playing cover slides up instead.
+The phone renders the console's real URL at phone size, so it is the same screens and data rather than a second implementation. Turned sideways the copy fills the width and the popup keyboard sits under it: the field it types into is named above the keys, and every keystroke lands in the console's own input. The steering cross walks the whole screen list, scrolls the page, and presses Enter; idle for thirty seconds while a track is playing and a now-playing cover slides up instead.
 
 ## Sneak peek — v3 hardware deck
 
@@ -104,4 +104,5 @@ This GitHub repository now includes the **first source drop** — the v3 hardwar
 - [Launcher screenshot](screenshots/f100-command-deck.webp)
 - [Logo Studio screenshot](screenshots/logo-studio.webp)
 - [Multi screen screenshot](screenshots/multi-screen.webp)
-- [Phone companion screenshot](screenshots/companion-map.webp)
+- [Phone companion with keyboard](screenshots/companion-keyboard.webp)
+- [Phone companion map](screenshots/companion-map.webp)
